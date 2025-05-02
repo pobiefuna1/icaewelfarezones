@@ -10,7 +10,6 @@ import re
 # Mobile-friendly layout and title
 st.set_page_config(layout="wide")
 st.image("icae_logo.png", width=120)
-st.markdown("<h4 style='text-align:center;'>🌍 Edmonton Welfare Zone Lookup</h4>", unsafe_allow_html=True)
 
 # Set your OpenCage API key
 API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
