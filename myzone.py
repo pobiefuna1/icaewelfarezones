@@ -6,6 +6,17 @@ import streamlit as st
 from opencage.geocoder import OpenCageGeocode
 import re
 
+from math import radians, cos, sin, asin, sqrt
+
+# Distance calculator
+def haversine_distance(lat1, lon1, lat2, lon2):
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6371 * c
+    return km
 
 # Mobile-friendly layout and title
 st.set_page_config(layout="centered")
@@ -14,7 +25,11 @@ st.image("icae_logo.png", width=120)
 # Set your OpenCage API key
 API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
 geocoder = OpenCageGeocode(API_KEY)
+EDMONTON_LAT = 53.5461
+EDMONTON_LON = -113.4938
 
+# Within 150 Km radius 
+OUTER_LIMITS = 150
 
 
 # App title
@@ -81,11 +96,15 @@ if address:
     try:
         formatted_address, lat, lon = geocode_address(clean_address(address))
         if formatted_address:
-            zone, bounds = classify_zone(lat, lon)
+            distance = haversine_distance(lat, lon, EDMONTON_LAT, EDMONTON_LON)
 
-            st.success(f"🏠 Welfare Zone: **{zone}**")
-            st.write(f"**Location:** {formatted_address}")
-            st.write(f"**Bounds:** {bounds}")
+            if distance > OUTER_LIMITS:
+                st.warning(f"This location is {distance:.1f} km from Edmonton and cannot be classified into an ICAE Welfare Zone.")
+            else:
+                zone, bounds = classify_zone(lat, lon)
+                st.success(f"🏠 Welfare Zone: **{zone}**")
+                st.write(f"**Location:** {formatted_address}")
+                st.write(f"**Bounds:** {bounds}")
         else:
             st.error("Could not resolve address. Please try a more specific location.")
     except Exception as e:
