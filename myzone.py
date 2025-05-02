@@ -17,7 +17,7 @@ geocoder = OpenCageGeocode(API_KEY)
 
 
 # App title
-st.title("IcaeWelfareZones Classifier")
+st.title("ICAE Welfare Zones")
 st.markdown("Enter an Edmonton address to find its Welfare Zone.")
 
 # Address input
