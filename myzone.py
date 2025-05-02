@@ -1,5 +1,18 @@
 import streamlit as st
-from geopy.geocoders import Nominatim
+from opencage.geocoder import OpenCageGeocode
+
+API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
+geocoder = OpenCageGeocode(API_KEY)
+
+def geocode_address(address):
+    results = geocoder.geocode(address)
+    if results and len(results) > 0:
+        lat = results[0]['geometry']['lat']
+        lon = results[0]['geometry']['lng']
+        formatted = results[0]['formatted']
+        return formatted, lat, lon
+    else:
+        return None, None, None
 
 # App title
 st.title("IcaeWelfareZones Classifier")
@@ -9,7 +22,7 @@ st.markdown("Enter an Edmonton address to find its Welfare Zone.")
 address = st.text_input("Address")
 
 # Initialize geocoder
-geolocator = Nominatim(user_agent="icae-welfare-zones")
+#geolocator = Nominatim(user_agent="icae-welfare-zones")
 
 # Function to classify zone based on lat/lon
 def classify_zone(lat, lon):
@@ -33,7 +46,7 @@ def classify_zone(lat, lon):
 # Main logic
 if address:
     try:
-        location = geolocator.geocode(address)
+        location = geocode_address(address)
         if location:
             lat = location.latitude
             lon = location.longitude
