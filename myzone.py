@@ -2,9 +2,19 @@ import streamlit as st
 from opencage.geocoder import OpenCageGeocode
 import re
 
+import streamlit as st
+from opencage.geocoder import OpenCageGeocode
+import re
+
+# Mobile-friendly layout and title
+st.set_page_config(layout="wide")
+st.markdown("<h4 style='text-align:center;'>🌍 Edmonton Welfare Zone Lookup</h4>", unsafe_allow_html=True)
+
 # Set your OpenCage API key
 API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
 geocoder = OpenCageGeocode(API_KEY)
+
+
 
 # App title
 st.title("IcaeWelfareZones Classifier")
