@@ -8,7 +8,7 @@ import re
 
 
 # Mobile-friendly layout and title
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered")
 st.image("icae_logo.png", width=120)
 
 # Set your OpenCage API key
