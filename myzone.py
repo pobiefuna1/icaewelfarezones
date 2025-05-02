@@ -3,7 +3,7 @@ from opencage.geocoder import OpenCageGeocode
 import re
 
 # Set your OpenCage API key
-API_KEY = "YOUR_API_KEY_HERE"
+API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
 geocoder = OpenCageGeocode(API_KEY)
 
 # App title
