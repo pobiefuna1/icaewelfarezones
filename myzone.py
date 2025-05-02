@@ -53,7 +53,7 @@ if address:
             st.write(f"**Location:** {formatted_address}")
             st.write(f"**Bounds:** {bounds}")
             st.success(f"🧭 Welfare Zone: {zone}")
-            st.write(f"**Welfare Zone:** {zone}")
+            
         else:
             st.error("Could not resolve address. Please try a more specific location.")
     except Exception as e:
