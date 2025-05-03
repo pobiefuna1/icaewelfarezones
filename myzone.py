@@ -4,7 +4,7 @@ import re
 
 from math import radians, cos, sin, asin, sqrt
 
-st.markdown("**[DEBUG MODE ON]**")
+
 
 # Distance calculator
 def haversine_distance(lat1, lon1, lat2, lon2):
