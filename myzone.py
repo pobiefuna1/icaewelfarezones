@@ -2,6 +2,8 @@ import streamlit as st
 from opencage.geocoder import OpenCageGeocode
 import re
 
+from geopy.distance import geodesic
+
 from math import radians, cos, sin, asin, sqrt
 
 
