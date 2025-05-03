@@ -1,7 +1,3 @@
-# import streamlit as st
-# from opencage.geocoder import OpenCageGeocode
-# import re
-
 import streamlit as st
 from opencage.geocoder import OpenCageGeocode
 import re
