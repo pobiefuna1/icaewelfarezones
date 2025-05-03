@@ -52,6 +52,7 @@ st.markdown("Enter an Edmonton address to find its Welfare Zone.")
 
 # Address input
 address = st.text_input("Address")
+st.write(f"Raw input received: `{address}`")
 
 # Address cleaner
 def clean_address(raw):
