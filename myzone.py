@@ -14,6 +14,24 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     km = 6371 * c
     return km
 
+# Command handler
+def handle_command(command):
+    cmd = command[1:].strip().lower()  # remove '?' and normalize
+    if cmd == "zones":
+        st.markdown("### ICAE Welfare Zones:")
+        st.markdown("""
+        - **Oguta Lake Zone – North West**: North of Yellowhead Trail and West of 97 Street  
+        - **Nkwu Zone – North East**: North of Yellowhead Trail and East of 97 Street  
+        - **Omambala Zone – West**: Between Yellowhead & Whitemud and West of 170 Street  
+        - **Ogene Zone – Central**: Between Yellowhead & Whitemud and between 170 Street & 75 Street  
+        - **Ogbunike Cave Zone – East**: Between Yellowhead & Whitemud and East of 75 Street  
+        - **Ichaka Zone – South West**: South of Whitemud Drive and West of Gateway Boulevard  
+        - **Orji Zone – South East**: South of Whitemud Drive and East of Gateway Boulevard
+        """)
+        return True
+    return False
+    
+    
 # Mobile-friendly layout and title
 st.set_page_config(layout="centered")
 st.image("icae_logo.png", width=120)
@@ -89,22 +107,25 @@ def geocode_address(address):
 
 # Main logic
 if address:
-    try:
-        formatted_address, lat, lon = geocode_address(clean_address(address))
-        if formatted_address:
-            distance = haversine_distance(lat, lon, EDMONTON_LAT, EDMONTON_LON)
-
-            if distance > OUTER_LIMITS:
-                st.warning(f"This location is {distance:.1f} km from Edmonton and cannot be classified into an ICAE Welfare Zone.")
-            else:
+    if address.startswith("?"):
+        if not handle_command(address):
+            st.warning("Unknown command. Try `?zones`.")
+    else:
+        try:
+            formatted_address, lat, lon = geocode_address(clean_address(address))
+            if formatted_address:
+                # Check outer bounds (if applicable)
+                distance = geodesic((lat, lon), EDMONTON_CENTER).km
+                if distance > OUTER_LIMITS:
+                    st.warning("Location is outside the Edmonton area.")
                 zone, bounds = classify_zone(lat, lon)
                 st.success(f"🏠 Welfare Zone: **{zone}**")
                 st.write(f"**Location:** {formatted_address}")
                 st.write(f"**Bounds:** {bounds}")
-        else:
-            st.error("Could not resolve address. Please try a more specific location.")
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+            else:
+                st.error("Could not resolve address. Please try a more specific location.")
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 # Footer
 st.markdown(
