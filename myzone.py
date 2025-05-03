@@ -45,6 +45,7 @@ API_KEY = "3dc65113cf8e4f10a2802af5cb630947"
 geocoder = OpenCageGeocode(API_KEY)
 EDMONTON_LAT = 53.5461
 EDMONTON_LON = -113.4938
+EDMONTON_CENTER = (53.5461, -113.4938)  # Approximate city center
 
 # Within 150 Km radius 
 OUTER_LIMITS = 150
