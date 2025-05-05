@@ -1,0 +1,15 @@
+# macOS system files
+.DS_Store
+
+# iA Writer metadata
+*.textbundle/
+*.ia
+
+# Temporary LaTeX artifacts
+*.aux
+*.log
+*.out
+*.toc
+
+# VS Code workspace settings (optional)
+.vscode/
